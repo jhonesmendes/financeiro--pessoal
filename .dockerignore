@@ -1,5 +1,4 @@
 **/node_modules
-.git
 .lage
 .pnp.*
 .yarn/*
@@ -8,3 +7,14 @@
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Never bake real user data, secrets, or dev-only scratch files into an image
+packages/sync-server/server-files
+packages/sync-server/user-files
+.env
+.env.*
+.tmp
+
+# Scratch working directory with a nested .git that confuses lage's git-based
+# hashing; not needed to build the app
+work

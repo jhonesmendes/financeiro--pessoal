@@ -1,0 +1,33 @@
+###################################################
+# Production stack for Portainer / docker-compose.
+# Builds the image from this repository's source (with your customizations:
+# WhatsApp bot, auto-budget calculation, UI tweaks) instead of pulling the
+# official actualbudget/actual-server image.
+###################################################
+
+services:
+  actual_server:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    ports:
+      - '5006:5006'
+    environment:
+      # Uncomment and configure as needed. See:
+      # https://actualbudget.org/docs/config/
+      # - ACTUAL_HTTPS_KEY=/data/selfhost.key
+      # - ACTUAL_HTTPS_CERT=/data/selfhost.crt
+      # - ACTUAL_PORT=5006
+      ACTUAL_PORT: '5006'
+    volumes:
+      - actual-data:/data
+    healthcheck:
+      test: ['CMD-SHELL', 'node scripts/health-check.js']
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    restart: unless-stopped
+
+volumes:
+  actual-data:
