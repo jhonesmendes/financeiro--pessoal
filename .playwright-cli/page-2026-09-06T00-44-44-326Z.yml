@@ -1,0 +1,144 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]: 💰
+      - text: My Finances
+    - generic [ref=e5]: Menu
+    - link "Orçamento" [ref=e6] [cursor=pointer]:
+      - /url: "#"
+      - img [ref=e7]
+      - text: Orçamento
+    - link "Relatórios" [ref=e12] [cursor=pointer]:
+      - /url: "#"
+      - img [ref=e13]
+      - text: Relatórios
+    - link "Agendamentos" [ref=e15] [cursor=pointer]:
+      - /url: "#"
+      - img [ref=e16]
+      - text: Agendamentos
+    - link "Mais" [ref=e18] [cursor=pointer]:
+      - /url: "#"
+      - img [ref=e19]
+      - text: Mais
+    - generic [ref=e23]:
+      - generic [ref=e26]: Todas as contas
+      - generic [ref=e27]: R$ 0,00
+  - generic [ref=e28]:
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - generic [ref=e31]: Orçamento
+        - generic [ref=e32]: Visão geral mensal
+      - generic [ref=e33]:
+        - button "‹" [ref=e34] [cursor=pointer]
+        - generic [ref=e35]: "2026"
+        - button "jun" [ref=e36] [cursor=pointer]
+        - button "jul" [ref=e37] [cursor=pointer]
+        - button "ago" [ref=e38] [cursor=pointer]
+        - button "set" [ref=e39] [cursor=pointer]
+        - button "out" [ref=e40] [cursor=pointer]
+        - button "nov" [ref=e41] [cursor=pointer]
+        - button "dez" [ref=e42] [cursor=pointer]
+        - generic [ref=e43]: "2027"
+        - button "jan" [ref=e44] [cursor=pointer]
+        - button "fev" [ref=e45] [cursor=pointer]
+        - button "mar" [ref=e46] [cursor=pointer]
+        - button "abr" [ref=e47] [cursor=pointer]
+        - button "›" [ref=e48] [cursor=pointer]
+    - generic [ref=e49]:
+      - generic [ref=e50]:
+        - generic [ref=e51]:
+          - generic [ref=e52]: Para orçar
+          - generic [ref=e53]: R$ 0,00
+          - generic [ref=e54]: Recursos disponíveis neste mês
+        - generic [ref=e56]:
+          - generic [ref=e57]: Orçado
+          - generic [ref=e58]: R$ 0,00
+          - generic [ref=e59]: Total alocado em categorias
+        - generic [ref=e60]:
+          - generic [ref=e61]: Gasto
+          - generic [ref=e62]: R$ 0,00
+          - generic [ref=e63]: Excedido no mês de out
+        - generic [ref=e64]:
+          - generic [ref=e65]: Guardado
+          - generic [ref=e66]: R$ 0,00
+          - generic [ref=e67]: Movido para o próximo mês
+      - generic [ref=e68]:
+        - generic [ref=e69]:
+          - generic [ref=e70]: Categorias — novembro 2026
+          - generic [ref=e71]:
+            - button "+ Adicionar grupo" [ref=e72] [cursor=pointer]
+            - button "+ Nova transação" [ref=e73] [cursor=pointer]
+        - table [ref=e74]:
+          - rowgroup [ref=e75]:
+            - row "Categoria Orçado Gasto Saldo" [ref=e76]:
+              - columnheader "Categoria" [ref=e77]
+              - columnheader "Orçado" [ref=e78]
+              - columnheader "Gasto" [ref=e79]
+              - columnheader "Saldo" [ref=e80]
+          - rowgroup [ref=e81]:
+            - row "▾ Despesas Comuns R$ 0,00 R$ 0,00 R$ 0,00" [ref=e82]:
+              - cell "▾ Despesas Comuns" [ref=e83]:
+                - generic [ref=e84]:
+                  - generic [ref=e85]: ▾
+                  - text: Despesas Comuns
+              - cell "R$ 0,00" [ref=e86]
+              - cell "R$ 0,00" [ref=e87]
+              - cell "R$ 0,00" [ref=e88]
+            - row "Alimentação 0,00 0,00 0,00" [ref=e89]:
+              - cell "Alimentação" [ref=e90]:
+                - generic [ref=e91]: Alimentação
+              - cell "0,00" [ref=e94]
+              - cell "0,00" [ref=e95]
+              - cell "0,00" [ref=e96]
+            - row "Geral 0,00 0,00 0,00" [ref=e97]:
+              - cell "Geral" [ref=e98]:
+                - generic [ref=e99]: Geral
+              - cell "0,00" [ref=e102]
+              - cell "0,00" [ref=e103]
+              - cell "0,00" [ref=e104]
+            - row "Contas 0,00 0,00 0,00" [ref=e105]:
+              - cell "Contas" [ref=e106]:
+                - generic [ref=e107]: Contas
+              - cell "0,00" [ref=e110]
+              - cell "0,00" [ref=e111]
+              - cell "0,00" [ref=e112]
+            - row "Contas Flexíveis 0,00 0,00 0,00" [ref=e113]:
+              - cell "Contas Flexíveis" [ref=e114]:
+                - generic [ref=e115]: Contas Flexíveis
+              - cell "0,00" [ref=e118]
+              - cell "0,00" [ref=e119]
+              - cell "0,00" [ref=e120]
+            - row "▾ Investimentos e Poupança R$ 0,00 R$ 0,00 R$ 0,00" [ref=e121]:
+              - cell "▾ Investimentos e Poupança" [ref=e122]:
+                - generic [ref=e123]:
+                  - generic [ref=e124]: ▾
+                  - text: Investimentos e Poupança
+              - cell "R$ 0,00" [ref=e125]
+              - cell "R$ 0,00" [ref=e126]
+              - cell "R$ 0,00" [ref=e127]
+            - row "Poupança 0,00 0,00 0,00" [ref=e128]:
+              - cell "Poupança" [ref=e129]:
+                - generic [ref=e130]: Poupança
+              - cell "0,00" [ref=e133]
+              - cell "0,00" [ref=e134]
+              - cell "0,00" [ref=e135]
+            - row "▾ Receita R$ 0,00" [ref=e136]:
+              - cell "▾ Receita" [ref=e137]:
+                - generic [ref=e138]:
+                  - generic [ref=e139]: ▾
+                  - text: Receita
+              - cell [ref=e140]
+              - cell [ref=e141]
+              - cell "R$ 0,00" [ref=e142]
+            - row "Renda 0,00" [ref=e143]:
+              - cell "Renda" [ref=e144]:
+                - generic [ref=e145]: Renda
+              - cell [ref=e146]
+              - cell [ref=e147]
+              - cell "0,00" [ref=e148]
+            - row "Saldos Iniciais 0,00" [ref=e149]:
+              - cell "Saldos Iniciais" [ref=e150]:
+                - generic [ref=e151]: Saldos Iniciais
+              - cell [ref=e152]
+              - cell [ref=e153]
+              - cell "0,00" [ref=e154]

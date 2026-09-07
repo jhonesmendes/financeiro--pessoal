@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Finances</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0F1117;
+    --surface:   #181C27;
+    --surface2:  #1E2333;
+    --border:    #252A3A;
+    --accent:    #6C63FF;
+    --accent2:   #9B95FF;
+    --green:     #22D9A0;
+    --red:       #FF5C7A;
+    --amber:     #FFB547;
+    --txt:       #E8EBF4;
+    --txt2:      #8B92A9;
+    --txt3:      #555D75;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--txt);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    font-size: 13px;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0;
+  }
+
+  .brand {
+    padding: 0 20px 28px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--txt);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand-icon {
+    width: 28px; height: 28px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: grid; place-items: center;
+    font-size: 14px;
+  }
+
+  .nav-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--txt3);
+    letter-spacing: .08em;
+    padding: 0 20px 8px;
+    text-transform: uppercase;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 20px;
+    color: var(--txt2);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+    transition: color .15s, background .15s;
+    border-left: 2px solid transparent;
+    text-decoration: none;
+  }
+  .nav-item:hover { color: var(--txt); background: var(--surface2); }
+  .nav-item.active {
+    color: var(--accent2);
+    background: rgba(108,99,255,.08);
+    border-left-color: var(--accent);
+    font-weight: 500;
+  }
+  .nav-item svg { width:15px; height:15px; flex-shrink:0; }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 0 20px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+  .account-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--surface2);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .account-dot { width:8px; height:8px; background:var(--green); border-radius:50%; }
+  .account-label { font-size:12px; color:var(--txt2); }
+  .account-val { font-size:13px; font-weight:600; margin-left:auto; }
+
+  /* MAIN */
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 28px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  .page-title { font-size: 15px; font-weight: 600; }
+  .page-sub   { font-size: 12px; color: var(--txt2); margin-top: 1px; }
+
+  /* month tabs */
+  .month-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 4px;
+  }
+  .month-nav-btn {
+    width:28px; height:28px;
+    border:none; background:transparent;
+    color:var(--txt2); cursor:pointer;
+    border-radius:8px;
+    display:grid; place-items:center;
+    font-size:14px;
+    transition: color .12s, background .12s;
+  }
+  .month-nav-btn:hover { color:var(--txt); background:var(--border); }
+  .year-label {
+    font-size:10px; font-weight:600; color:var(--txt3);
+    padding: 0 6px;
+    letter-spacing:.06em;
+  }
+  .month-tab {
+    padding: 5px 10px;
+    border:none; background:transparent;
+    color:var(--txt2); cursor:pointer;
+    border-radius:8px;
+    font-size:12px; font-weight:500;
+    font-family:'Inter',sans-serif;
+    transition: color .12s, background .12s;
+  }
+  .month-tab:hover { color:var(--txt); background:var(--border); }
+  .month-tab.active {
+    background: var(--accent);
+    color: #fff;
+    font-weight:600;
+  }
+  .month-tab.past { color: var(--txt3); }
+  .month-tab.curr-year { border-top: 2px solid var(--accent); border-radius:0 0 8px 8px; }
+
+  /* CONTENT */
+  .content {
+    flex:1;
+    overflow-y: auto;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* BUDGET SUMMARY CARDS */
+  .summary-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 12px;
+  }
+
+  .sum-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: border-color .15s;
+  }
+  .sum-card:hover { border-color: var(--txt3); }
+  .sum-card.highlight {
+    border-color: var(--accent);
+    background: rgba(108,99,255,.07);
+  }
+
+  .sum-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--txt2);
+    text-transform: none;
+  }
+  .sum-value {
+    font-size: 26px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -.02em;
+    line-height: 1;
+  }
+  .sum-value.green  { color: var(--green); }
+  .sum-value.red    { color: var(--red); }
+  .sum-value.accent { color: var(--accent2); }
+  .sum-value.muted  { color: var(--txt2); }
+  .sum-sub {
+    font-size: 11px;
+    color: var(--txt3);
+    margin-top: 2px;
+  }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: var(--accent);
+  }
+
+  /* TABLE AREA */
+  .table-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .table-title { font-size:13px; font-weight:600; }
+  .table-actions { display:flex; gap:8px; }
+  .btn-ghost {
+    padding:6px 14px;
+    background:transparent;
+    border:1px solid var(--border);
+    border-radius:8px;
+    color:var(--txt2);
+    font-size:12px;
+    font-family:'Inter',sans-serif;
+    cursor:pointer;
+    font-weight:500;
+    transition: color .12s, border-color .12s, background .12s;
+  }
+  .btn-ghost:hover { color:var(--txt); border-color:var(--txt3); background:var(--surface2); }
+  .btn-accent {
+    padding:6px 14px;
+    background:var(--accent);
+    border:1px solid transparent;
+    border-radius:8px;
+    color:#fff;
+    font-size:12px;
+    font-family:'Inter',sans-serif;
+    cursor:pointer;
+    font-weight:500;
+    transition: opacity .12s;
+  }
+  .btn-accent:hover { opacity:.85; }
+
+  /* table */
+  table { width:100%; border-collapse:collapse; }
+  thead th {
+    padding:10px 16px;
+    font-size:11px;
+    font-weight:600;
+    color:var(--txt3);
+    text-align:right;
+    border-bottom:1px solid var(--border);
+    white-space:nowrap;
+  }
+  thead th:first-child { text-align:left; }
+
+  tbody tr { transition: background .1s; }
+  tbody tr:hover { background:var(--surface2); }
+
+  /* group row */
+  .row-group td {
+    padding: 12px 16px 6px;
+    font-size:11px;
+    font-weight:600;
+    color:var(--txt2);
+    text-transform:none;
+    border-top:1px solid var(--border);
+    letter-spacing:.01em;
+  }
+  .row-group td:not(:first-child) {
+    text-align:right;
+    font-variant-numeric:tabular-nums;
+  }
+  .group-name { display:flex; align-items:center; gap:6px; }
+  .group-chevron { color:var(--txt3); font-size:10px; }
+
+  /* item row */
+  .row-item td {
+    padding: 9px 16px;
+    border-bottom: 1px solid rgba(37,42,58,.5);
+    font-variant-numeric: tabular-nums;
+  }
+  .row-item td:not(:first-child) { text-align:right; }
+  .row-item:last-child td { border-bottom:none; }
+
+  .cat-name {
+    display:flex; align-items:center; gap:8px;
+    color:var(--txt2);
+    font-size:12px;
+    padding-left:16px;
+  }
+  .cat-dot {
+    width:6px; height:6px;
+    border-radius:50%;
+    flex-shrink:0;
+  }
+
+  .val-orcado { color:var(--txt2); font-size:12px; }
+  .val-gasto  { color:var(--txt);  font-size:12px; font-weight:500; }
+  .val-saldo  { font-size:12px; font-weight:600; }
+  .val-saldo.pos { color:var(--green); }
+  .val-saldo.neg { color:var(--red); }
+  .val-saldo.zer { color:var(--txt3); }
+
+  /* inline progress in row */
+  .row-progress {
+    width:60px;
+    height:3px;
+    background:var(--border);
+    border-radius:99px;
+    overflow:hidden;
+    display:inline-block;
+    vertical-align:middle;
+    margin-left:8px;
+  }
+  .row-progress-fill {
+    height:100%;
+    border-radius:99px;
+  }
+
+  /* income section */
+  .row-income td {
+    padding: 9px 16px;
+    font-variant-numeric:tabular-nums;
+  }
+  .row-income td:not(:first-child) { text-align:right; }
+  .income-name { color:var(--txt2); font-size:12px; padding-left:16px; }
+  .val-income { color:var(--green); font-weight:600; font-size:12px; }
+
+  /* scrollbar */
+  .content::-webkit-scrollbar { width:4px; }
+  .content::-webkit-scrollbar-track { background:transparent; }
+  .content::-webkit-scrollbar-thumb { background:var(--border); border-radius:99px; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon">💰</div>
+    My Finances
+  </div>
+
+  <div class="nav-label">Menu</div>
+
+  <a class="nav-item active" href="#">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    Orçamento
+  </a>
+  <a class="nav-item" href="#">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    Relatórios
+  </a>
+  <a class="nav-item" href="#">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    Agendamentos
+  </a>
+  <a class="nav-item" href="#">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+    Mais
+  </a>
+
+  <div class="sidebar-footer">
+    <div class="account-pill">
+      <div class="account-dot"></div>
+      <div>
+        <div class="account-label">Todas as contas</div>
+      </div>
+      <div class="account-val">R$ 0,00</div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div>
+      <div class="page-title">Orçamento</div>
+      <div class="page-sub">Visão geral mensal</div>
+    </div>
+
+    <div class="month-nav">
+      <button class="month-nav-btn">&#8249;</button>
+
+      <span class="year-label">2026</span>
+      <button class="month-tab past">jun</button>
+      <button class="month-tab past">jul</button>
+      <button class="month-tab past">ago</button>
+      <button class="month-tab past">set</button>
+      <button class="month-tab past">out</button>
+      <button class="month-tab active">nov</button>
+      <button class="month-tab">dez</button>
+      <span class="year-label">2027</span>
+      <button class="month-tab">jan</button>
+      <button class="month-tab">fev</button>
+      <button class="month-tab">mar</button>
+      <button class="month-tab">abr</button>
+
+      <button class="month-nav-btn">&#8250;</button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- SUMMARY CARDS -->
+    <div class="summary-row">
+
+      <div class="sum-card highlight">
+        <div class="sum-label">Para orçar</div>
+        <div class="sum-value accent">R$ 0,00</div>
+        <div class="sum-sub">Recursos disponíveis neste mês</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+      </div>
+
+      <div class="sum-card">
+        <div class="sum-label">Orçado</div>
+        <div class="sum-value muted">R$ 0,00</div>
+        <div class="sum-sub">Total alocado em categorias</div>
+      </div>
+
+      <div class="sum-card">
+        <div class="sum-label">Gasto</div>
+        <div class="sum-value red">R$ 0,00</div>
+        <div class="sum-sub">Excedido no mês de out</div>
+      </div>
+
+      <div class="sum-card">
+        <div class="sum-label">Guardado</div>
+        <div class="sum-value green">R$ 0,00</div>
+        <div class="sum-sub">Movido para o próximo mês</div>
+      </div>
+
+    </div>
+
+    <!-- TABLE CARD -->
+    <div class="table-card">
+      <div class="table-header">
+        <div class="table-title">Categorias — novembro 2026</div>
+        <div class="table-actions">
+          <button class="btn-ghost">+ Adicionar grupo</button>
+          <button class="btn-accent">+ Nova transação</button>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width:44%">Categoria</th>
+            <th>Orçado</th>
+            <th>Gasto</th>
+            <th>Saldo</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- GROUP: Despesas Comuns -->
+          <tr class="row-group">
+            <td>
+              <div class="group-name">
+                <span class="group-chevron">▾</span>
+                Despesas Comuns
+              </div>
+            </td>
+            <td>R$ 0,00</td>
+            <td>R$ 0,00</td>
+            <td>R$ 0,00</td>
+          </tr>
+
+          <tr class="row-item">
+            <td>
+              <div class="cat-name">
+                <div class="cat-dot" style="background:#6C63FF"></div>
+                Alimentação
+                <span class="row-progress"><span class="row-progress-fill" style="width:0%;background:#6C63FF"></span></span>
+              </div>
+            </td>
+            <td class="val-orcado">0,00</td>
+            <td class="val-gasto">0,00</td>
+            <td class="val-saldo zer">0,00</td>
+          </tr>
+
+          <tr class="row-item">
+            <td>
+              <div class="cat-name">
+                <div class="cat-dot" style="background:#9B95FF"></div>
+                Geral
+                <span class="row-progress"><span class="row-progress-fill" style="width:0%;background:#9B95FF"></span></span>
+              </div>
+            </td>
+            <td class="val-orcado">0,00</td>
+            <td class="val-gasto">0,00</td>
+            <td class="val-saldo zer">0,00</td>
+          </tr>
+
+          <tr class="row-item">
+            <td>
+              <div class="cat-name">
+                <div class="cat-dot" style="background:#FFB547"></div>
+                Contas
+                <span class="row-progress"><span class="row-progress-fill" style="width:0%;background:#FFB547"></span></span>
+              </div>
+            </td>
+            <td class="val-orcado">0,00</td>
+            <td class="val-gasto">0,00</td>
+            <td class="val-saldo zer">0,00</td>
+          </tr>
+
+          <tr class="row-item">
+            <td>
+              <div class="cat-name">
+                <div class="cat-dot" style="background:#FF5C7A"></div>
+                Contas Flexíveis
+                <span class="row-progress"><span class="row-progress-fill" style="width:0%;background:#FF5C7A"></span></span>
+              </div>
+            </td>
+            <td class="val-orcado">0,00</td>
+            <td class="val-gasto">0,00</td>
+            <td class="val-saldo zer">0,00</td>
+          </tr>
+
+          <!-- GROUP: Investimentos e Poupança -->
+          <tr class="row-group">
+            <td>
+              <div class="group-name">
+                <span class="group-chevron">▾</span>
+                Investimentos e Poupança
+              </div>
+            </td>
+            <td>R$ 0,00</td>
+            <td>R$ 0,00</td>
+            <td>R$ 0,00</td>
+          </tr>
+
+          <tr class="row-item">
+            <td>
+              <div class="cat-name">
+                <div class="cat-dot" style="background:#22D9A0"></div>
+                Poupança
+                <span class="row-progress"><span class="row-progress-fill" style="width:0%;background:#22D9A0"></span></span>
+              </div>
+            </td>
+            <td class="val-orcado">0,00</td>
+            <td class="val-gasto">0,00</td>
+            <td class="val-saldo zer">0,00</td>
+          </tr>
+
+          <!-- GROUP: Receita -->
+          <tr class="row-group" style="background:rgba(34,217,160,.04)">
+            <td>
+              <div class="group-name">
+                <span class="group-chevron">▾</span>
+                Receita
+              </div>
+            </td>
+            <td></td>
+            <td></td>
+            <td style="color:var(--green)">R$ 0,00</td>
+          </tr>
+
+          <tr class="row-income">
+            <td><div class="income-name">Renda</div></td>
+            <td></td>
+            <td></td>
+            <td class="val-income">0,00</td>
+          </tr>
+
+          <tr class="row-income">
+            <td><div class="income-name">Saldos Iniciais</div></td>
+            <td></td>
+            <td></td>
+            <td class="val-income">0,00</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+</body>
+</html>

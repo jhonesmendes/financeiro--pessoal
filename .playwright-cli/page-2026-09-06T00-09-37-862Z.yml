@@ -1,0 +1,435 @@
+- generic [ref=e45]:
+  - generic [ref=e48]:
+    - generic [ref=e49]:
+      - button "Test Budget" [ref=e50]:
+        - generic [ref=e51]: Test Budget
+        - img [ref=e52]
+      - button "Desafixar barra lateral" [ref=e54]:
+        - img
+    - generic [ref=e57]:
+      - generic [ref=e58]:
+        - link "Orçamento" [ref=e60] [cursor=pointer]:
+          - /url: /budget
+          - generic [ref=e61]:
+            - img [ref=e62]
+            - generic [ref=e64]: Orçamento
+        - link "Relatórios" [ref=e66] [cursor=pointer]:
+          - /url: /reports
+          - generic [ref=e67]:
+            - img [ref=e68]
+            - generic [ref=e70]: Relatórios
+        - link "Agendamentos" [ref=e72] [cursor=pointer]:
+          - /url: /schedules
+          - generic [ref=e73]:
+            - img [ref=e74]
+            - generic [ref=e77]: Agendamentos
+        - button "Mais" [ref=e79]:
+          - generic [ref=e80]:
+            - img [ref=e81]
+            - generic [ref=e83]: Mais
+      - generic [ref=e86]:
+        - link "Todas as contas 70,588.91" [ref=e90] [cursor=pointer]:
+          - /url: /accounts
+          - generic [ref=e93]:
+            - generic [ref=e94]: Todas as contas
+            - generic [ref=e97]: 70,588.91
+        - link "Dentro do orçamento 5,157.62" [ref=e101] [cursor=pointer]:
+          - /url: /accounts/onbudget
+          - generic [ref=e104]:
+            - generic [ref=e105]: Dentro do orçamento
+            - generic [ref=e108]: 5,157.62
+        - link "Bank of America 1,565.28" [ref=e113] [cursor=pointer]:
+          - /url: /accounts/5d60aa3c-6b21-4b7e-bb8e-be0a88b8324d
+          - generic [ref=e116]:
+            - generic [ref=e117]: Bank of America
+            - generic [ref=e118]: 1,565.28
+        - link "Ally Savings 3,267.74" [ref=e123] [cursor=pointer]:
+          - /url: /accounts/cd258c9e-c0e8-448e-a513-235ebc31bf73
+          - generic [ref=e126]:
+            - generic [ref=e127]: Ally Savings
+            - generic [ref=e128]: 3,267.74
+        - link "Capital One Checking -186.69" [ref=e133] [cursor=pointer]:
+          - /url: /accounts/e15ed07b-6c36-45f0-b010-47290e455436
+          - generic [ref=e136]:
+            - generic [ref=e137]: Capital One Checking
+            - generic [ref=e138]: "-186.69"
+        - link "HSBC 511.29" [ref=e143] [cursor=pointer]:
+          - /url: /accounts/880b726f-618a-440e-9505-3376371dbfcc
+          - generic [ref=e146]:
+            - generic [ref=e147]: HSBC
+            - generic [ref=e148]: "511.29"
+        - link "Fora do orçamento 65,431.29" [ref=e152] [cursor=pointer]:
+          - /url: /accounts/offbudget
+          - generic [ref=e155]:
+            - generic [ref=e156]: Fora do orçamento
+            - generic [ref=e159]: 65,431.29
+        - link "Vanguard 401k 2,699.59" [ref=e164] [cursor=pointer]:
+          - /url: /accounts/f538cc8f-9177-48b8-b70d-96e7d2f5647d
+          - generic [ref=e167]:
+            - generic [ref=e168]: Vanguard 401k
+            - generic [ref=e169]: 2,699.59
+        - link "Mortgage -313,339.76" [ref=e174] [cursor=pointer]:
+          - /url: /accounts/e9eee226-8dca-4bce-8175-715934749faf
+          - generic [ref=e177]:
+            - generic [ref=e178]: Mortgage
+            - generic [ref=e179]: "-313,339.76"
+        - link "House Asset 371,800.00" [ref=e184] [cursor=pointer]:
+          - /url: /accounts/4f009c3b-5e69-4ccd-b8a2-89894bd5c062
+          - generic [ref=e187]:
+            - generic [ref=e188]: House Asset
+            - generic [ref=e189]: 371,800.00
+        - link "Roth IRA 4,271.46" [ref=e194] [cursor=pointer]:
+          - /url: /accounts/1e076422-78ec-4d1a-a74f-4db8e447447e
+          - generic [ref=e197]:
+            - generic [ref=e198]: Roth IRA
+            - generic [ref=e199]: 4,271.46
+      - button "Adicionar conta" [ref=e202]:
+        - generic [ref=e203]:
+          - img [ref=e204]
+          - generic [ref=e207]: Adicionar conta
+  - generic [ref=e210]:
+    - generic:
+      - generic "Escolha o número de meses mostrados por vez" [ref=e212]:
+        - img [ref=e213]
+        - img [ref=e215]
+        - img [ref=e217]
+      - generic [ref=e219]:
+        - button "Trocar tema" [ref=e221]:
+          - img [ref=e222]
+        - button "Habilitar modo de privacidade" [ref=e225]:
+          - img [ref=e226]
+        - button "Sem servidor" [ref=e230]
+        - button "Ajuda" [ref=e232]:
+          - img [ref=e233]
+          - text: Ajuda
+    - alert [ref=e235]:
+      - generic [ref=e236]:
+        - button "Fechar" [ref=e237]:
+          - img [ref=e238]
+        - generic [ref=e240]:
+          - generic [ref=e241]: Welcome to Actual!
+          - generic [ref=e242]:
+            - generic [ref=e245]: New to Actual? Take a short tour to learn how budgeting works and find your way around.
+            - button "Take the tour" [ref=e246]:
+              - generic [ref=e247]: Take the tour
+    - generic [ref=e248]:
+      - generic [ref=e249]:
+        - generic [ref=e250]: Orçamento
+        - generic [ref=e251]: Monthly overview
+      - generic [ref=e255]:
+        - generic [ref=e260]:
+          - button [ref=e261]:
+            - generic "Hoje" [ref=e262]:
+              - img [ref=e263]
+          - button [ref=e265]:
+            - generic "Mês anterior" [ref=e266]:
+              - img [ref=e267]
+          - generic [ref=e270]:
+            - text: abr
+            - generic [ref=e271]: "2026"
+          - generic [ref=e273]: mai
+          - generic [ref=e275]: jun
+          - generic [ref=e277]: jul
+          - generic [ref=e279]: ago
+          - generic [ref=e281] [cursor=pointer]: set
+          - generic [ref=e283]: out
+          - generic [ref=e285]: nov
+          - generic [ref=e287]: dez
+          - generic [ref=e289]:
+            - text: jan
+            - generic [ref=e290]: "2027"
+          - generic [ref=e292]: fev
+          - button [ref=e293]:
+            - generic "Próximo mês" [ref=e294]:
+              - img [ref=e295]
+        - generic [ref=e297]:
+          - generic [ref=e301]:
+            - generic [ref=e303]:
+              - generic [ref=e304]:
+                - button "Recolher resumo do mês" [ref=e306]:
+                  - img [ref=e307]
+                - generic [ref=e310]: agosto
+                - generic [ref=e311]:
+                  - button "Ver notas" [ref=e315]:
+                    - img [ref=e316]
+                  - button "Menu" [ref=e319]:
+                    - img [ref=e320]
+              - generic [ref=e323]:
+                - generic [ref=e326]:
+                  - generic [ref=e327]: "Para Orçar:"
+                  - generic [ref=e330] [cursor=pointer]: "0.00"
+                - generic [ref=e332]:
+                  - generic [ref=e333]: Orçado
+                  - generic [ref=e334]: 5,018.84
+                - generic [ref=e335]:
+                  - generic [ref=e336]: Gasto
+                  - generic [ref=e337]: 3,492.30
+                - generic [ref=e338]:
+                  - generic [ref=e339]: Guardado
+                  - generic [ref=e340]: 4,030.00
+            - generic [ref=e342]:
+              - generic [ref=e343]:
+                - button "Recolher resumo do mês" [ref=e345]:
+                  - img [ref=e346]
+                - generic [ref=e349]: setembro
+                - generic [ref=e350]:
+                  - button "Ver notas" [ref=e354]:
+                    - img [ref=e355]
+                  - button "Menu" [ref=e358]:
+                    - img [ref=e359]
+              - generic [ref=e362]:
+                - generic [ref=e365]:
+                  - generic [ref=e366]: "Para Orçar:"
+                  - generic [ref=e369] [cursor=pointer]: "0.00"
+                - generic [ref=e371]:
+                  - generic [ref=e372]: Orçado
+                  - generic [ref=e373]: 3,030.00
+                - generic [ref=e374]:
+                  - generic [ref=e375]: Gasto
+                  - generic [ref=e376]: 1,667.93
+                - generic [ref=e377]:
+                  - generic [ref=e378]: Guardado
+                  - generic [ref=e379]: "758.99"
+            - generic [ref=e381]:
+              - generic [ref=e382]:
+                - button "Recolher resumo do mês" [ref=e384]:
+                  - img [ref=e385]
+                - generic [ref=e388]: outubro
+                - generic [ref=e389]:
+                  - button "Ver notas" [ref=e393]:
+                    - img [ref=e394]
+                  - button "Menu" [ref=e397]:
+                    - img [ref=e398]
+              - generic [ref=e401]:
+                - generic [ref=e404]:
+                  - generic [ref=e405]: "Para Orçar:"
+                  - generic [ref=e408] [cursor=pointer]: "667.32"
+                - generic [ref=e410]:
+                  - generic [ref=e411]: Orçado
+                  - generic [ref=e412]: "0.00"
+                - generic [ref=e413]:
+                  - generic [ref=e414]: Gasto
+                  - generic [ref=e415]: "0.00"
+                - generic [ref=e416]:
+                  - generic [ref=e417]: Guardado
+                  - generic [ref=e418]: "0.00"
+          - generic [ref=e419]:
+            - generic [ref=e420]: Categories — setembro '26
+            - generic [ref=e421]:
+              - button "+ Adicionar grupo" [ref=e422]
+              - button "+ New transaction" [ref=e423]
+          - generic [ref=e424]:
+            - generic [ref=e425]:
+              - button "Expandir" [ref=e426]:
+                - img [ref=e427]
+              - generic [ref=e429]: Categoria
+              - button "Menu" [ref=e430]:
+                - img [ref=e431]
+            - generic [ref=e434]:
+              - generic [ref=e435]:
+                - generic [ref=e436]: Orçado
+                - generic [ref=e437]: 3,030.00
+              - generic [ref=e438]:
+                - generic [ref=e439]: Gasto
+                - generic [ref=e440]: "-1,667.93"
+              - generic [ref=e441]:
+                - generic [ref=e442]: Saldo
+                - generic [ref=e443]: 4,398.63
+          - generic [ref=e446]:
+            - generic [ref=e449]:
+              - generic [ref=e1363]:
+                - img [ref=e1364]
+                - generic [ref=e1366]: Despesas Comuns
+              - generic [ref=e459]:
+                - generic [ref=e462]: 1,505.00
+                - generic [ref=e465]: "-467.93"
+                - generic [ref=e468]: 4,073.63
+            - generic [ref=e1047]:
+              - generic [ref=e1052]:
+                - generic [ref=e1053]: Food
+                - button [ref=e1352]:
+                  - img [ref=e1353]
+                - button "Ver notas" [ref=e1358]:
+                  - img [ref=e1359]
+              - generic [ref=e1055]:
+                - generic [ref=e1056]:
+                  - button "Ver notas" [ref=e1060]:
+                    - img [ref=e1061]
+                  - button [ref=e1064]:
+                    - img [ref=e1065]
+                  - generic [ref=e1069]: "400.00"
+                - generic [ref=e1074] [cursor=pointer]: "-7.66"
+                - button "671.80" [ref=e1078]:
+                  - generic [ref=e1080] [cursor=pointer]: "671.80"
+            - generic [ref=e1083]:
+              - generic [ref=e1089]: Restaurants
+              - generic [ref=e1091]:
+                - generic [ref=e1092]:
+                  - button "Ver notas" [ref=e1096]:
+                    - img [ref=e1097]
+                  - button [ref=e1100]:
+                    - img [ref=e1101]
+                  - generic [ref=e1105]: "300.00"
+                - generic [ref=e1110] [cursor=pointer]: "-96.06"
+                - button "371.66" [ref=e1114]:
+                  - generic [ref=e1116] [cursor=pointer]: "371.66"
+            - generic [ref=e1119]:
+              - generic [ref=e1125]: Entertainment
+              - generic [ref=e1127]:
+                - generic [ref=e1128]:
+                  - button "Ver notas" [ref=e1132]:
+                    - img [ref=e1133]
+                  - button [ref=e1136]:
+                    - img [ref=e1137]
+                  - generic [ref=e1141]: "100.00"
+                - generic [ref=e1146] [cursor=pointer]: "-64.80"
+                - button "35.20" [ref=e1150]:
+                  - generic [ref=e1152] [cursor=pointer]: "35.20"
+            - generic [ref=e1155]:
+              - generic [ref=e1161]: Clothing
+              - generic [ref=e1163]:
+                - generic [ref=e1164]:
+                  - button "Ver notas" [ref=e1168]:
+                    - img [ref=e1169]
+                  - button [ref=e1172]:
+                    - img [ref=e1173]
+                  - generic [ref=e1177]: "30.00"
+                - generic [ref=e1182] [cursor=pointer]: "-116.85"
+                - button "-86.85" [ref=e1186]:
+                  - generic [ref=e1188] [cursor=pointer]: "-86.85"
+            - generic [ref=e1191]:
+              - generic [ref=e1197]: General
+              - generic [ref=e1199]:
+                - generic [ref=e1200]:
+                  - button "Ver notas" [ref=e1204]:
+                    - img [ref=e1205]
+                  - button [ref=e1208]:
+                    - img [ref=e1209]
+                  - generic [ref=e1213]: "500.00"
+                - generic [ref=e1218] [cursor=pointer]: "-35.54"
+                - button "1,065.00" [ref=e1222]:
+                  - generic [ref=e1224] [cursor=pointer]: 1,065.00
+            - generic [ref=e1227]:
+              - generic [ref=e1233]: Gift
+              - generic [ref=e1235]:
+                - generic [ref=e1236]:
+                  - button "Ver notas" [ref=e1240]:
+                    - img [ref=e1241]
+                  - button [ref=e1244]:
+                    - img [ref=e1245]
+                  - generic [ref=e1249]: "75.00"
+                - generic [ref=e1254] [cursor=pointer]: "-42.20"
+                - button "32.80" [ref=e1258]:
+                  - generic [ref=e1260] [cursor=pointer]: "32.80"
+            - generic [ref=e1263]:
+              - generic [ref=e1269]: Medical
+              - generic [ref=e1271]:
+                - generic [ref=e1272]:
+                  - button "Ver notas" [ref=e1276]:
+                    - img [ref=e1277]
+                  - button [ref=e1280]:
+                    - img [ref=e1281]
+                  - generic [ref=e1285]: "100.00"
+                - generic [ref=e1290] [cursor=pointer]: "-104.82"
+                - button "-4.82" [ref=e1294]:
+                  - generic [ref=e1296] [cursor=pointer]: "-4.82"
+            - generic [ref=e1299]:
+              - generic [ref=e1305]: Savings
+              - generic [ref=e1307]:
+                - generic [ref=e1308]:
+                  - button "Ver notas" [ref=e1312]:
+                    - img [ref=e1313]
+                  - button [ref=e1316]:
+                    - img [ref=e1317]
+                  - generic [ref=e1321]: "0.00"
+                - generic [ref=e1326] [cursor=pointer]: "0.00"
+                - button "1,988.84" [ref=e1330]:
+                  - generic [ref=e1332] [cursor=pointer]: 1,988.84
+            - generic [ref=e759]:
+              - generic [ref=e764]:
+                - img [ref=e765]
+                - generic [ref=e767]: Bills
+              - generic [ref=e769]:
+                - generic [ref=e772]: 1,525.00
+                - generic [ref=e775]: "-1,200.00"
+                - generic [ref=e778]: "325.00"
+            - generic [ref=e781]:
+              - generic [ref=e787]: Cell
+              - generic [ref=e789]:
+                - generic [ref=e790]:
+                  - button "Ver notas" [ref=e794]:
+                    - img [ref=e795]
+                  - button [ref=e798]:
+                    - img [ref=e799]
+                  - generic [ref=e803]: "75.00"
+                - generic [ref=e808] [cursor=pointer]: "0.00"
+                - button "75.00" [ref=e812]:
+                  - generic [ref=e814] [cursor=pointer]: "75.00"
+            - generic [ref=e817]:
+              - generic [ref=e823]: Internet
+              - generic [ref=e825]:
+                - generic [ref=e826]:
+                  - button "Ver notas" [ref=e830]:
+                    - img [ref=e831]
+                  - button [ref=e834]:
+                    - img [ref=e835]
+                  - generic [ref=e839]: "60.00"
+                - generic [ref=e844] [cursor=pointer]: "0.00"
+                - button "60.00" [ref=e848]:
+                  - generic [ref=e850] [cursor=pointer]: "60.00"
+            - generic [ref=e853]:
+              - generic [ref=e859]: Mortgage
+              - generic [ref=e861]:
+                - generic [ref=e862]:
+                  - button "Ver notas" [ref=e866]:
+                    - img [ref=e867]
+                  - button [ref=e870]:
+                    - img [ref=e871]
+                  - generic [ref=e875]: 1,200.00
+                - generic [ref=e880] [cursor=pointer]: "-1,200.00"
+                - button "0.00" [ref=e884]:
+                  - generic [ref=e886] [cursor=pointer]: "0.00"
+            - generic [ref=e889]:
+              - generic [ref=e895]: Water
+              - generic [ref=e897]:
+                - generic [ref=e898]:
+                  - button "Ver notas" [ref=e902]:
+                    - img [ref=e903]
+                  - button [ref=e906]:
+                    - img [ref=e907]
+                  - generic [ref=e911]: "90.00"
+                - generic [ref=e916] [cursor=pointer]: "0.00"
+                - button "90.00" [ref=e920]:
+                  - generic [ref=e922] [cursor=pointer]: "90.00"
+            - generic [ref=e925]:
+              - generic [ref=e931]: Power
+              - generic [ref=e933]:
+                - generic [ref=e934]:
+                  - button "Ver notas" [ref=e938]:
+                    - img [ref=e939]
+                  - button [ref=e942]:
+                    - img [ref=e943]
+                  - generic [ref=e947]: "100.00"
+                - generic [ref=e952] [cursor=pointer]: "0.00"
+                - button "100.00" [ref=e956]:
+                  - generic [ref=e958] [cursor=pointer]: "100.00"
+            - generic [ref=e961]:
+              - button "Adicionar grupo" [ref=e963]
+              - generic [ref=e966]: Recebido
+            - generic [ref=e968]:
+              - generic [ref=e973]:
+                - img [ref=e974]
+                - generic [ref=e976]: Income
+              - generic [ref=e981]: "617.20"
+            - generic [ref=e983]:
+              - generic [ref=e989]: Saldos Iniciais
+              - button "0.00" [ref=e995]:
+                - generic [ref=e997] [cursor=pointer]: "0.00"
+            - generic [ref=e999]:
+              - generic [ref=e1005]: Misc
+              - button "0.00" [ref=e1011]:
+                - generic [ref=e1013] [cursor=pointer]: "0.00"
+            - generic [ref=e1015]:
+              - generic [ref=e1021]: Income
+              - button "617.20" [ref=e1027]:
+                - generic [ref=e1029] [cursor=pointer]: "617.20"
