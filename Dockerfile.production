@@ -1,0 +1,68 @@
+###################################################
+# Self-contained production image.
+#
+# Unlike packages/sync-server/docker/ubuntu.Dockerfile (which expects
+# `yarn build:server` to have already run outside of Docker, as done in the
+# official project's CI), this Dockerfile builds everything from source
+# inside the image. Point Portainer (or `docker build`) at this file and the
+# repository root as context and it produces a ready-to-run image with no
+# manual build step required.
+###################################################
+
+FROM node:24-bookworm AS builder
+
+RUN apt-get update && apt-get install -y openssl
+
+WORKDIR /app
+
+# Copy the whole repo (minus node_modules/.git/etc, see .dockerignore) so
+# lage/yarn can see every root-level config file (lage.config.js,
+# tsconfig.json, ...) it needs to resolve workspaces correctly.
+COPY . .
+
+# Install all workspace dependencies (including dev, needed to build)
+RUN if [ "$(uname -m)" = "armv7l" ]; then yarn config set taskPoolConcurrency 2; yarn config set networkConcurrency 5; fi
+RUN yarn install --immutable
+
+# Build the browser bundle and the sync-server itself. --skip-translations
+# avoids a `git clone` of the actualbudget/translations repo, which the
+# Docker build context doesn't need and can't do anyway (no .git here).
+# `yarn exec` puts node_modules/.bin (lage, vite, etc.) on PATH.
+RUN yarn exec ./bin/package-browser --skip-translations && yarn workspace @actual-app/sync-server build
+
+# Now strip down to production-only dependencies
+RUN yarn workspaces focus @actual-app/sync-server --production
+
+# Dereference yarn's workspace:* symlinks so the prod stage can copy just node_modules.
+RUN cp -RL node_modules node_modules.real \
+    && rm -rf node_modules \
+    && mv node_modules.real node_modules
+
+# Strip dev-only content from dereferenced workspace packages to keep the final image lean.
+RUN find node_modules/@actual-app -maxdepth 2 -type d \
+    \( -name src -o -name e2e -o -name __tests__ -o -name __mocks__ -o -name tests -o -name test -o -name build-stats \) \
+    -exec rm -rf {} +
+
+FROM node:24-bookworm-slim AS prod
+
+RUN apt-get update && apt-get install tini && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+
+ARG USERNAME=actual
+ARG USER_UID=1001
+ARG USER_GID=$USER_UID
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && mkdir /data && chown -R ${USERNAME}:${USERNAME} /data
+
+WORKDIR /app
+ENV NODE_ENV=production
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/packages/sync-server/package.json ./
+COPY --from=builder /app/packages/sync-server/build ./
+
+RUN mkdir -p src && ln -s ../scripts src/scripts
+
+ENTRYPOINT ["/usr/bin/tini","-g",  "--"]
+EXPOSE 5006
+CMD ["node", "app.js"]
