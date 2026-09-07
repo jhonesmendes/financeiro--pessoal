@@ -4,6 +4,7 @@
 /data2
 Actual-*
 !actual-server.js
+!packages/sync-server/src/app-whatsapp/actual-client.js
 **/xcuserdata/*
 export-2020-01-10.csv
 
