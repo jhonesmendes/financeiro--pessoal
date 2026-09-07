@@ -24,11 +24,18 @@ COPY . .
 RUN if [ "$(uname -m)" = "armv7l" ]; then yarn config set taskPoolConcurrency 2; yarn config set networkConcurrency 5; fi
 RUN yarn install --immutable
 
-# Build the browser bundle and the sync-server itself. --skip-translations
-# avoids a `git clone` of the actualbudget/translations repo, which the
-# Docker build context doesn't need and can't do anyway (no .git here).
-# `yarn exec` puts node_modules/.bin (lage, vite, etc.) on PATH.
-RUN yarn exec ./bin/package-browser --skip-translations && yarn workspace @actual-app/sync-server build
+# Build the browser bundle and the sync-server itself, calling each
+# workspace's own build script directly instead of going through
+# `bin/package-browser` (which orchestrates via `lage`). `lage` shells out to
+# `git` to hash files for its cache, which fails in build environments that
+# don't hand a full .git over as part of the Docker build context (e.g. some
+# Portainer/CI git-based builds only send a plain file tree, no .git).
+# Calling the workspaces directly sidesteps that dependency entirely.
+RUN yarn workspace @actual-app/crdt run build \
+    && yarn workspace @actual-app/core run build \
+    && yarn workspace plugins-service run build \
+    && yarn workspace @actual-app/web run build:browser \
+    && yarn workspace @actual-app/sync-server run build
 
 # Now strip down to production-only dependencies
 RUN yarn workspaces focus @actual-app/sync-server --production
