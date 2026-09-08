@@ -31,8 +31,13 @@ RUN yarn install --immutable
 # don't hand a full .git over as part of the Docker build context (e.g. some
 # Portainer/CI git-based builds only send a plain file tree, no .git).
 # Calling the workspaces directly sidesteps that dependency entirely.
+# @actual-app/api is built too: the WhatsApp integration
+# (packages/sync-server/src/app-whatsapp/actual-client.js) imports it at
+# runtime to talk to the budget programmatically, even though upstream's
+# own build:server never needed it.
 RUN yarn workspace @actual-app/crdt run build \
     && yarn workspace @actual-app/core run build \
+    && yarn workspace @actual-app/api run build \
     && yarn workspace plugins-service run build \
     && yarn workspace @actual-app/web run build:browser \
     && yarn workspace @actual-app/sync-server run build
