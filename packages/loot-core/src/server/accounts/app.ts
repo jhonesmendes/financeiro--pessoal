@@ -1715,18 +1715,18 @@ async function calculateBudgetsFromTransactions(
     }
   }
 
-  // Group transactions by month and category. Only expense categories are
-  // budgeted here: in Actual's envelope model, income categories aren't
-  // meant to carry a "budgeted" amount the way expense categories do -
-  // income simply flows into the available-to-budget total for the month
-  // as transactions get categorized. Setting a budget value on an income
-  // category doesn't represent real income and only distorts the
-  // month-to-month "to budget" calculation.
+  // Group transactions by month and category.
+  // In Actual's envelope model, budgeting an income category represents
+  // "how much income I expect in this category" and adds to the
+  // available-to-budget total, same as budgeting an expense category
+  // represents "how much I plan to spend" and is deducted from it. Both
+  // are budgeted here so the "To Budget" total reflects the imported
+  // history correctly (verified against actualbudget.org/docs/budgeting/).
   const budgetsByMonth: Record<string, Record<string, number>> = {};
 
   for (const tx of transactions) {
     if (!tx.date) continue;
-    if (tx.amount >= 0) continue; // Only expenses (negative amounts)
+    if (tx.amount === 0) continue; // Skip zero amounts
 
     const month = tx.date.substring(0, 7); // YYYY-MM format
     const categoryId = tx.category || null;
@@ -1737,7 +1737,19 @@ async function calculateBudgetsFromTransactions(
     }
 
     const category = categoryMap.get(categoryId);
-    if (!category || category.is_income) continue; // Only expense categories
+    if (!category) continue; // Skip if category doesn't exist
+
+    // For expenses (amount < 0), only include expense categories (is_income = false)
+    // For income (amount > 0), only include income categories (is_income = true)
+    const isExpense = tx.amount < 0;
+    const categoryIsIncome = category.is_income;
+
+    if (isExpense && categoryIsIncome) {
+      continue; // Expense amount in income category, skip
+    }
+    if (!isExpense && !categoryIsIncome) {
+      continue; // Income amount in expense category, skip
+    }
 
     if (!budgetsByMonth[month]) {
       budgetsByMonth[month] = {};
