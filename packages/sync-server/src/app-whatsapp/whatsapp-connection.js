@@ -79,6 +79,12 @@ async function connectInner() {
     browser: ['Actual Budget', 'Chrome', '1.0.0'],
     generateHighQualityLinkPreview: false,
     syncFullHistory: false,
+    // Keeps the account's real presence untouched — without this Baileys
+    // marks the account "online" for as long as the bot is connected, which
+    // makes WhatsApp treat it like an actively-viewed linked device and
+    // suppresses push notifications on the phone (same as leaving WhatsApp
+    // Web open and focused).
+    markOnlineOnConnect: false,
   });
 
   state.sock = sock;
