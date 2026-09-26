@@ -908,9 +908,17 @@ async function whatsappRequest(path: string, body: unknown = {}) {
     throw new Error('Failed to get server config.');
   }
 
-  return post(serverConfig.WHATSAPP_SERVER + path, body, {
-    'X-ACTUAL-TOKEN': userToken,
-  });
+  // Without a timeout, a slow response (the WhatsApp connect handshake can
+  // be heavy on the server) leaves the request hanging indefinitely. Since
+  // the UI polls '/status' every few seconds, a single stuck request used
+  // to let poll after poll pile up against the server instead of failing
+  // and letting the next one through.
+  return post(
+    serverConfig.WHATSAPP_SERVER + path,
+    body,
+    { 'X-ACTUAL-TOKEN': userToken },
+    10000,
+  );
 }
 
 async function whatsappStatus() {

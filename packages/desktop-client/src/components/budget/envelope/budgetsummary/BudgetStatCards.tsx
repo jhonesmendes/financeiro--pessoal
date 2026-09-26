@@ -11,13 +11,7 @@ import { FinancialText } from '#components/FinancialText';
 import { useFormat } from '#hooks/useFormat';
 import { envelopeBudget } from '#spreadsheet/bindings';
 
-import { ToBudget } from './ToBudget';
-
-type BudgetStatCardsProps = {
-  month: string;
-  prevMonthName: string;
-  onBudgetAction: (month: string, action: string, arg?: unknown) => void;
-};
+import { useRealBalance } from './RealBalanceAmount';
 
 function StatCard({
   label,
@@ -97,21 +91,17 @@ function StatValue({
   );
 }
 
-export function BudgetStatCards({
-  month,
-  prevMonthName,
-  onBudgetAction,
-}: BudgetStatCardsProps) {
+export function BudgetStatCards() {
   const { t } = useTranslation();
   const format = useFormat();
 
-  const totalBudgeted =
-    useEnvelopeSheetValue({ name: envelopeBudget.totalBudgeted, value: 0 }) ??
-    0;
+  const totalIncome =
+    useEnvelopeSheetValue({ name: envelopeBudget.totalIncome, value: 0 }) ?? 0;
   const totalSpent =
     useEnvelopeSheetValue({ name: envelopeBudget.totalSpent, value: 0 }) ?? 0;
   const forNextMonth =
     useEnvelopeSheetValue({ name: envelopeBudget.forNextMonth, value: 0 }) ?? 0;
+  const realBalance = useRealBalance();
 
   return (
     <View
@@ -131,25 +121,28 @@ export function BudgetStatCards({
         },
       }}
     >
-      <StatCard highlighted sub={t('Recursos disponíveis neste mês')}>
-        <ToBudget
-          month={month}
-          prevMonthName={prevMonthName}
-          onBudgetAction={onBudgetAction}
-          style={{ alignItems: 'stretch', gap: 4 }}
-          amountStyle={{
-            fontSize: 'clamp(20px, 4cqi, 24px)',
-            fontWeight: 700,
-            letterSpacing: '-0.02em',
-            lineHeight: 1.2,
-            textAlign: 'left',
-          }}
-        />
+      <StatCard
+        highlighted
+        label={t('Saldo real do mês')}
+        sub={t('Receita − Gasto real')}
+      >
+        <StatValue
+          color={
+            realBalance >= 0
+              ? theme.budgetNumberPositive
+              : theme.budgetNumberNegative
+          }
+        >
+          {format(realBalance, 'financial-with-sign')}
+        </StatValue>
       </StatCard>
 
-      <StatCard label={t('Orçado')} sub={t('Total alocado em categorias')}>
-        <StatValue color={theme.budgetNumberNeutral}>
-          {format(Math.abs(totalBudgeted), 'financial')}
+      <StatCard
+        label={t('Receita recebida')}
+        sub={t('Total que entrou no mês')}
+      >
+        <StatValue color={theme.budgetNumberPositive}>
+          {format(Math.abs(totalIncome), 'financial')}
         </StatValue>
       </StatCard>
 

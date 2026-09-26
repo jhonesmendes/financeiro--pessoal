@@ -1,10 +1,11 @@
 // @ts-strict-ignore
 import React, { useRef } from 'react';
 import type { CSSProperties, Ref } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { Button } from '@actual-app/components/button';
 import { SvgCheveronDown } from '@actual-app/components/icons/v1';
+import { Text } from '@actual-app/components/text';
 import { TextOneLine } from '@actual-app/components/text-one-line';
 import { theme } from '@actual-app/components/theme';
 import { View } from '@actual-app/components/view';
@@ -13,11 +14,52 @@ import type {
   CategoryGroupEntity,
 } from '@actual-app/core/types/models';
 
+import { useEnvelopeSheetValue } from '#components/budget/envelope/EnvelopeBudgetComponents';
 import { InputCell } from '#components/table';
 import { useContextMenu } from '#hooks/useContextMenu';
+import { useFormat } from '#hooks/useFormat';
 import { useGlobalPref } from '#hooks/useGlobalPref';
+import { envelopeBudget } from '#spreadsheet/bindings';
 
 import { SidebarCategoryButtons } from './SidebarCategoryButtons';
+
+function OverspentBadge({ category }: { category: CategoryEntity }) {
+  const format = useFormat();
+  const budgeted = Math.abs(
+    useEnvelopeSheetValue(envelopeBudget.catBudgeted(category.id)) ?? 0,
+  );
+  const spent = Math.abs(
+    useEnvelopeSheetValue(envelopeBudget.catSumAmount(category.id)) ?? 0,
+  );
+
+  if (spent === 0) return null;
+
+  const noBudget = budgeted === 0;
+  const overspent = !noBudget && spent > budgeted;
+  if (!noBudget && !overspent) return null;
+
+  return (
+    <Text
+      style={{
+        flexShrink: 0,
+        marginLeft: 6,
+        padding: '1px 6px',
+        borderRadius: 4,
+        fontSize: 10,
+        fontWeight: 700,
+        color: theme.errorText,
+        backgroundColor: theme.errorBackground,
+        border: '1px solid ' + theme.errorBorder,
+      }}
+    >
+      {noBudget ? (
+        <Trans>⚠ sem orçamento</Trans>
+      ) : (
+        <Trans>⚠ +{{ amount: format(spent - budgeted, 'financial') }}</Trans>
+      )}
+    </Text>
+  );
+}
 
 type SidebarCategoryProps = {
   innerRef: Ref<HTMLDivElement>;
@@ -117,6 +159,7 @@ export function SidebarCategory({
       >
         {category.name}
       </TextOneLine>
+      {!category.is_income && <OverspentBadge category={category} />}
       <View style={{ flexShrink: 0, marginLeft: 5 }}>
         <Button
           variant="bare"

@@ -42,8 +42,16 @@ export function useWhatsAppStatus() {
   const [data, setData] = useState<WhatsAppStatusData>(emptyStatus);
   const [isLoading, setIsLoading] = useState(true);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  // Guards against overlapping polls: the WhatsApp connect handshake can be
+  // slow on the server, and without this a stalled request wouldn't stop
+  // the next tick from firing another one on top of it, piling up
+  // concurrent requests whose responses can then resolve out of order and
+  // make the UI flicker between stale and fresh status/QR code.
+  const isFetchingRef = useRef(false);
 
   const refresh = useCallback(async () => {
+    if (isFetchingRef.current) return;
+    isFetchingRef.current = true;
     try {
       const result = await send('whatsapp-status');
       if (result && !('error' in result)) {
@@ -52,6 +60,7 @@ export function useWhatsAppStatus() {
     } catch (e) {
       console.error('whatsapp-status failed:', e);
     } finally {
+      isFetchingRef.current = false;
       setIsLoading(false);
     }
   }, []);
