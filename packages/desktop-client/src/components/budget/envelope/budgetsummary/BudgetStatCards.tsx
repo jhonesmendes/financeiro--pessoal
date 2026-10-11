@@ -12,6 +12,13 @@ import { useFormat } from '#hooks/useFormat';
 import { envelopeBudget } from '#spreadsheet/bindings';
 
 import { useRealBalance } from './RealBalanceAmount';
+import { ToBudget } from './ToBudget';
+
+type BudgetStatCardsProps = {
+  month: string;
+  prevMonthName: string;
+  onBudgetAction: (month: string, action: string, arg?: unknown) => void;
+};
 
 function StatCard({
   label,
@@ -91,10 +98,17 @@ function StatValue({
   );
 }
 
-export function BudgetStatCards() {
+export function BudgetStatCards({
+  month,
+  prevMonthName,
+  onBudgetAction,
+}: BudgetStatCardsProps) {
   const { t } = useTranslation();
   const format = useFormat();
 
+  const totalBudgeted =
+    useEnvelopeSheetValue({ name: envelopeBudget.totalBudgeted, value: 0 }) ??
+    0;
   const totalIncome =
     useEnvelopeSheetValue({ name: envelopeBudget.totalIncome, value: 0 }) ?? 0;
   const totalSpent =
@@ -113,7 +127,7 @@ export function BudgetStatCards() {
           gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
         },
         '@container budget-summary (min-width: 760px)': {
-          gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
+          gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
         },
         '& [data-cellname]': {
           maxWidth: '100%',
@@ -121,6 +135,22 @@ export function BudgetStatCards() {
         },
       }}
     >
+      <StatCard highlighted sub={t('Recursos disponíveis neste mês')}>
+        <ToBudget
+          month={month}
+          prevMonthName={prevMonthName}
+          onBudgetAction={onBudgetAction}
+          style={{ alignItems: 'stretch', gap: 4 }}
+          amountStyle={{
+            fontSize: 'clamp(20px, 4cqi, 24px)',
+            fontWeight: 700,
+            letterSpacing: '-0.02em',
+            lineHeight: 1.2,
+            textAlign: 'left',
+          }}
+        />
+      </StatCard>
+
       <StatCard
         highlighted
         label={t('Saldo real do mês')}
@@ -143,6 +173,12 @@ export function BudgetStatCards() {
       >
         <StatValue color={theme.budgetNumberPositive}>
           {format(Math.abs(totalIncome), 'financial')}
+        </StatValue>
+      </StatCard>
+
+      <StatCard label={t('Orçado')} sub={t('Total alocado em categorias')}>
+        <StatValue color={theme.budgetNumberNeutral}>
+          {format(Math.abs(totalBudgeted), 'financial')}
         </StatValue>
       </StatCard>
 

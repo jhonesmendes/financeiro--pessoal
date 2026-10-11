@@ -22,6 +22,7 @@ import { useUndo } from '#hooks/useUndo';
 import { BudgetMonthMenu } from './BudgetMonthMenu';
 import { BudgetStatCards } from './BudgetStatCards';
 import { RealBalanceAmount } from './RealBalanceAmount';
+import { ToBudget } from './ToBudget';
 
 type BudgetSummaryProps = {
   month: string;
@@ -45,6 +46,12 @@ export const BudgetSummary = memo(({ month }: BudgetSummaryProps) => {
   function onMenuClose() {
     setMenuOpen(false);
   }
+
+  const prevMonthName = monthUtils.format(
+    monthUtils.prevMonth(month),
+    'MMM',
+    locale,
+  );
 
   const ExpandOrCollapseIcon = collapsed
     ? SvgArrowButtonDown1
@@ -222,17 +229,28 @@ export const BudgetSummary = memo(({ month }: BudgetSummaryProps) => {
           <View
             style={{
               alignItems: 'center',
+              gap: 10,
               padding: '10px 20px',
               justifyContent: 'space-between',
               backgroundColor: theme.budgetCurrentMonth,
               borderTop: '1px solid ' + theme.tableBorder,
             }}
           >
+            <ToBudget
+              prevMonthName={prevMonthName}
+              month={month}
+              onBudgetAction={onBudgetAction}
+              isCollapsed
+            />
             <RealBalanceAmount />
           </View>
         ) : (
           <View>
-            <BudgetStatCards />
+            <BudgetStatCards
+              month={month}
+              prevMonthName={prevMonthName}
+              onBudgetAction={onBudgetAction}
+            />
           </View>
         )}
       </SheetNameProvider>
