@@ -22,7 +22,7 @@ export function IncomeHeader({ onShowNewGroup }: IncomeHeaderProps) {
     <View style={{ flexDirection: 'row', flex: 1 }}>
       <View
         style={{
-          width: 200 + 100 * categoryExpandedState,
+          width: 300 + 100 * categoryExpandedState,
           alignItems: 'flex-start',
           justifyContent: 'flex-start',
         }}

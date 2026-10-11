@@ -50,7 +50,7 @@ export const BudgetPageHeader = memo<BudgetPageHeaderProps>(
           style={{
             marginLeft: isSingleMonth
               ? 'auto'
-              : 200 + 100 * categoryExpandedState + 5 - offsetMultipleMonths,
+              : 300 + 100 * categoryExpandedState + 5 - offsetMultipleMonths,
             marginRight: isSingleMonth
               ? 0
               : 5 + getScrollbarWidth() - offsetMultipleMonths,

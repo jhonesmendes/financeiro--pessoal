@@ -81,7 +81,7 @@ export const BudgetTotals = memo(function BudgetTotals({
     >
       <View
         style={{
-          width: 200 + 100 * categoryExpandedState,
+          width: 300 + 100 * categoryExpandedState,
           color: theme.tableHeaderText,
           justifyContent: 'center',
           paddingLeft: 5,

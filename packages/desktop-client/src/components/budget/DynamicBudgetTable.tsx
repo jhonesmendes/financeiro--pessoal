@@ -58,13 +58,13 @@ const DynamicBudgetTable = ({
 
   const numPossible = getNumPossibleMonths(
     width,
-    200 + 100 * categoryExpandedState,
+    300 + 100 * categoryExpandedState,
   );
   const numMonths = Math.min(numPossible, maxMonths);
   const maxWidth =
     numMonths <= 1
       ? width
-      : 200 + 100 * categoryExpandedState + 500 * numMonths;
+      : 300 + 100 * categoryExpandedState + 500 * numMonths;
 
   useEffect(() => {
     setDisplayMax(numPossible);

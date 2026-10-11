@@ -289,7 +289,7 @@ export function BudgetTable(props: BudgetTableProps) {
         }}
       >
         {type !== 'envelope' && numMonths > 1 && (
-          <View style={{ width: 200 + 100 * categoryExpandedState }} />
+          <View style={{ width: 300 + 100 * categoryExpandedState }} />
         )}
         <MonthsProvider
           startMonth={prewarmStartMonth}
