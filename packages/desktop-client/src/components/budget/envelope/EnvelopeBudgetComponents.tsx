@@ -22,7 +22,9 @@ import type {
 } from '#components/budget';
 import { BalanceWithCarryover } from '#components/budget/BalanceWithCarryover';
 import { makeAmountGrey } from '#components/budget/util';
+import { FinancialText } from '#components/FinancialText';
 import { NotesButton } from '#components/NotesButton';
+import { PrivacyFilter } from '#components/PrivacyFilter';
 import { CellValue, CellValueText } from '#components/spreadsheet/CellValue';
 import { Field, Row, SheetCell } from '#components/table';
 import type { SheetCellProps } from '#components/table';
@@ -77,6 +79,15 @@ const cellStyle: CSSProperties = {
 };
 
 export const BudgetTotalsMonth = memo(function BudgetTotalsMonth() {
+  const format = useFormat();
+  const totalIncome =
+    useEnvelopeSheetValue({ name: envelopeBudget.totalIncome, value: 0 }) ?? 0;
+  const totalSpent =
+    useEnvelopeSheetValue({ name: envelopeBudget.totalSpent, value: 0 }) ?? 0;
+  // Real balance for the month (income received minus actual spending),
+  // matching the "Saldo real do mês" card instead of the envelope total.
+  const realBalance = totalIncome - Math.abs(totalSpent);
+
   return (
     <View
       style={{
@@ -113,12 +124,11 @@ export const BudgetTotalsMonth = memo(function BudgetTotalsMonth() {
         <Text style={{ color: theme.tableHeaderText }}>
           <Trans>Balance</Trans>
         </Text>
-        <EnvelopeCellValue
-          binding={envelopeBudget.totalBalance}
-          type="financial"
-        >
-          {props => <CellValueText {...props} style={cellStyle} />}
-        </EnvelopeCellValue>
+        <PrivacyFilter>
+          <FinancialText style={cellStyle}>
+            {format(realBalance, 'financial')}
+          </FinancialText>
+        </PrivacyFilter>
       </View>
     </View>
   );
